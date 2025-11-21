@@ -1,0 +1,63 @@
+name: Deploy to Server
+on:
+    push:
+        branches:
+            - main
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Create deployment package
+              run: |
+                  mkdir -p deploy_package
+                  rsync -av --progress . deploy_package/ \
+                    --exclude '.git' \
+                    --exclude '.github' \
+                    --exclude '.gitignore' \
+                    --exclude '.nojekyll' \
+                    --exclude '.DS_Store' \
+                    --exclude '*.log' \
+                    --exclude 'deploy_package'
+                  cd deploy_package
+                  tar -czf ../docs.tar.gz .
+                  cd ..
+
+            - name: Clean old files on server
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  password: ${{ secrets.SSH_PASS }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      cd ${{ secrets.REMOTE_PATH }}
+                      find . -type f -delete
+                      find . -type d ! -name '.' -delete
+                      echo "Historical data cleaned"
+
+            - name: Upload to server via SFTP
+              uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+              with:
+                  username: ${{ secrets.SSH_USER }}
+                  server: ${{ secrets.SSH_HOST }}
+                  port: ${{ secrets.SSH_PORT }}
+                  password: ${{ secrets.SSH_PASS }}
+                  local_path: "./docs.tar.gz"
+                  remote_path: ${{ secrets.REMOTE_PATH }}
+                  sftp_only: true
+
+            - name: Extract files on server
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  password: ${{ secrets.SSH_PASS }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      cd ${{ secrets.REMOTE_PATH }}
+                      tar -xzf docs.tar.gz
+                      rm docs.tar.gz
+                      echo "Deployment completed successfully"

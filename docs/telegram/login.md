@@ -17,6 +17,6 @@
 
 网页版:[https://web.telegram.org/a](https://web.telegram.org/a)
 
-苹果手机:应用商店更换美区账号后搜索 **Swiftgram** **Nicegram** 任意一款安卓下载登录即可。
+苹果手机:应用商店更换美区账号后搜索 **Swiftgram** **Nicegram** 任意一款安装下载登录即可。
 
-安卓手机:直接下载 **Nekogram** 安卓登录即可、[点我下载](https://github.com/Nekogram/Nekogram/releases/download/v12.1.1/Nekogram-12.1.1-6211-universal.apk)
+安卓手机:直接下载 **Nekogram** 安装登录即可、[点我下载](https://github.com/Nekogram/Nekogram/releases/download/v12.1.1/Nekogram-12.1.1-6211-universal.apk)
