@@ -1,3 +1,6 @@
 - [首页](/)
 - Telegram 成品号
   - [登录异常](docs/telegram/login.md)
+- 账户余额充值
+  - [推荐使用 USDT](docs/recharge/usdt.md)
+  - [充值常见问题](docs/recharge/faq.md)
