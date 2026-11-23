@@ -6,5 +6,7 @@
 - 账户余额充值
   - [推荐使用 USDT](docs/recharge/usdt.md)
   - [充值常见问题](docs/recharge/faq.md)
+- 苹果ID常见问题
+  - [独享 ID 常见问题](docs/apple-id/dedicated-id.md)
 - ChatGPT
   - [Auth Session 提取教程](docs/chatgpt/auth-session.md)
